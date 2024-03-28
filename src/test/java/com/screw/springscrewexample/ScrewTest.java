@@ -18,11 +18,10 @@ public class ScrewTest {
     public void screwContextLoader() {
         //配置数据源
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        hikariConfig.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&useSSL=false" +
-                "&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=Asia/Shanghai");
-        hikariConfig.setUsername("root");
-        hikariConfig.setPassword("rootroot");
+        hikariConfig.setDriverClassName("org.postgresql.Driver");
+        hikariConfig.setJdbcUrl("jdbc:postgresql://47.109.31.55:15432/authing-server-yjl");
+        hikariConfig.setUsername("postgres");
+        hikariConfig.setPassword("PXb2T33EVqPVuo4P9TCFTH7ki69AjS2v");
         //设置可以获取tables remarks信息
         hikariConfig.addDataSourceProperty("useInformationSchema", "true");
         hikariConfig.setMinimumIdle(2);
@@ -31,24 +30,15 @@ public class ScrewTest {
         //生成配置
         EngineConfig engineConfig = EngineConfig.builder()
                 //生成文件路径
-                .fileOutputDir("/Documents")
+                .fileOutputDir("/Users/yujiale/Downloads")
                 //打开目录
-                .openOutputDir(true)
+                .openOutputDir(false)
                 //生成文件类型：HTML
                 .fileType(EngineFileType.HTML)
                 //生成模板实现
                 .produceType(EngineTemplateType.freemarker)
                 .build();
-        //忽略表
-        ArrayList<String> ignoreTableName = new ArrayList<>();
-        //ignoreTableName.add("test_user");
-        //ignoreTableName.add("test_group");
-        //忽略表的前缀
-        ArrayList<String> ignorePrefix = new ArrayList<>();
-        //ignorePrefix.add("test_");
-        //忽略表后缀
-        ArrayList<String> ignoreSuffix = new ArrayList<>();
-        //ignoreSuffix.add("_test");
+
         ProcessConfig processConfig = ProcessConfig.builder()
                 //指定生成逻辑、当存在指定表、指定表前缀、指定表后缀时，将生成指定表，其余表不生成、并跳过忽略表配置
                 //根据名称指定表生成
@@ -56,13 +46,7 @@ public class ScrewTest {
                 //根据表前缀生成
                 .designatedTablePrefix(new ArrayList<>())
                 //根据表后缀生成
-                .designatedTableSuffix(new ArrayList<>())
-                //忽略表名
-                .ignoreTableName(ignoreTableName)
-                //忽略表前缀
-                .ignoreTablePrefix(ignorePrefix)
-                //忽略表后缀
-                .ignoreTableSuffix(ignoreSuffix).build();
+                .designatedTableSuffix(new ArrayList<>()).build();
         //配置
         Configuration config = Configuration.builder()
                 //版本
